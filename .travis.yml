@@ -4,8 +4,6 @@ before_install:
   - mkdir ~/.docker && echo '{ "experimental":"enabled" }' > ~/.docker/config.json
   - docker --version
 
-dist: bionic
-
 language: bash
 
 env:
