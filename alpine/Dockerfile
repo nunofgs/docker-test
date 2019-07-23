@@ -25,7 +25,7 @@ WORKDIR /OctoPrint-${version}
 RUN pip install -r requirements.txt
 RUN python setup.py install
 
-FROM $arch/python:2.7-alpine3.7
+FROM python:2.7-alpine3.10
 
 COPY --from=build /usr/local/bin /usr/local/bin
 COPY --from=build /usr/local/lib /usr/local/lib
