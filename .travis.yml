@@ -19,5 +19,7 @@ stages:
 
 script:
   - docker login -u=nunofgs -p="$DOCKER_PASSWORD"
+  - docker manifest inspect python:2.7-alpine3.10
   - docker buildx create --use
-  - docker buildx build --platform linux/amd64,linux/arm/v6,linux/arm/v7 --build-arg "version=$TRAVIS_BRANCH" -t nunofgs/test:latest -f "$VARIANT/Dockerfile" .
+  - docker buildx ls
+  - docker buildx build --platform linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 --build-arg "version=$TRAVIS_BRANCH" -t nunofgs/test:latest -f "$VARIANT/Dockerfile" .
