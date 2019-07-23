@@ -1,10 +1,7 @@
 ARG arch
 
-# Intermediate build container with arm support.
-FROM hypriot/qemu-register as qemu
-FROM $arch/python:2.7-alpine3.10 as build
-
-COPY --from=qemu /qemu-arm /usr/bin/qemu-arm-static
+# Intermediate build container.
+FROM python:2.7-alpine3.10 as build
 
 ARG version
 
@@ -34,7 +31,6 @@ COPY --from=build /usr/local/bin /usr/local/bin
 COPY --from=build /usr/local/lib /usr/local/lib
 COPY --from=build /mjpg-streamer-*/mjpg-streamer-experimental /opt/mjpg-streamer
 COPY --from=build /OctoPrint-* /opt/octoprint
-COPY --from=qemu /qemu-arm /usr/bin/qemu-arm-static
 
 RUN apk --no-cache add build-base ffmpeg haproxy libjpeg openssh-client v4l-utils && \
   pip install supervisor
