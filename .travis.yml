@@ -4,7 +4,7 @@ before_install:
   - mkdir ~/.docker && echo '{ "experimental":"enabled" }' > ~/.docker/config.json
   - docker --version
 
-dist: xenial
+dist: bionic
 
 language: bash
 
@@ -20,4 +20,4 @@ stages:
 script:
   - docker login -u=nunofgs -p="$DOCKER_PASSWORD"
   - docker buildx create --use
-  - docker buildx build --platform linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 --build-arg "version=$TRAVIS_BRANCH" -t nunofgs/test:latest -f "$VARIANT/Dockerfile" .
+  - docker buildx build --platform linux/amd64,linux/arm/v6,linux/arm/v7 --build-arg "version=$TRAVIS_BRANCH" -t nunofgs/test:latest -f "$VARIANT/Dockerfile" .
