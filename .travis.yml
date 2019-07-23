@@ -4,6 +4,8 @@ before_install:
   - mkdir ~/.docker && echo '{ "experimental":"enabled" }' > ~/.docker/config.json
   - docker --version
 
+dist: xenial
+
 language: bash
 
 env:
