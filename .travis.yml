@@ -25,8 +25,9 @@ script:
   - docker buildx build
     --platform $PLATFORMS
     --build-arg "version=$TRAVIS_BRANCH"
-    --tag nunofgs/test:$TRAVIS_BRANCH
-    `if [ -n "$TRAVIS_TAG" ]; then echo "--tag nunofgs/test:$TRAVIS_TAG"; fi`
     --file "$VARIANT/Dockerfile"
+    --tag nunofgs/test:$TRAVIS_BRANCH-$VARIANT
+    `if [ -n "$TRAVIS_TAG" ]; then echo "--tag nunofgs/test:latest-$VARIANT"; fi`
+    `if [ "$VARIANT" = "debian" ]; then echo "--tag nunofgs/test:latest"; fi`
     --push
     .
