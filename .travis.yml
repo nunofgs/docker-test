@@ -1,7 +1,6 @@
 before_install:
   - curl -sf https://test.docker.com | sh
-  # - sudo apt-get install docker-ce=18.02.0~ce-0~ubuntu
-  - mkdir ~/.docker && echo '{ "experimental":"enabled" }' > ~/.docker/config.json
+  # - mkdir ~/.docker && echo '{ "experimental":"enabled" }' > ~/.docker/config.json
   - docker --version
 
 dist: bionic
@@ -9,6 +8,8 @@ dist: bionic
 language: bash
 
 env:
+  global:
+    - DOCKER_CLI_EXPERIMENTAL=enabled
   matrix:
     - VARIANT=alpine
     - VARIANT=debian
@@ -21,5 +22,4 @@ script:
   - docker login -u=nunofgs -p="$DOCKER_PASSWORD"
   - docker run --privileged linuxkit/binfmt:v0.7
   - docker buildx create --use
-  - docker buildx ls
   - docker buildx build --platform linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 --build-arg "version=$TRAVIS_BRANCH" -t nunofgs/test:latest -f "$VARIANT/Dockerfile" .
