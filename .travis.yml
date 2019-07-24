@@ -28,6 +28,7 @@ script:
     --file "$VARIANT/Dockerfile"
     --tag nunofgs/test:$TRAVIS_BRANCH-$VARIANT
     `if [ -n "$TRAVIS_TAG" ]; then echo "--tag nunofgs/test:latest-$VARIANT"; fi`
-    `if [ "$VARIANT" = "debian" ]; then echo "--tag nunofgs/test:latest"; fi`
+    `if [ -n "$TRAVIS_TAG" ] && [ "$VARIANT" = "debian" ]; then echo "--tag nunofgs/test:latest"; fi`
+    `if [ "$VARIANT" = "debian" ]; then echo "--tag nunofgs/test:$TRAVIS_BRANCH"; fi`
     --push
     .
