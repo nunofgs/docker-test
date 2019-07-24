@@ -6,6 +6,7 @@ This is a Dockerfile to set up [OctoPrint](http://octoprint.org/). It supports t
 
 - x86
 - arm32v6 (Raspberry Pi, etc.)
+- arm32v7
 
 # Tags
 
