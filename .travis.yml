@@ -9,6 +9,7 @@ language: bash
 env:
   global:
     - DOCKER_CLI_EXPERIMENTAL=enabled
+    - PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
   matrix:
     - VARIANT=alpine
     - VARIANT=debian
@@ -21,4 +22,11 @@ script:
   - echo "$DOCKER_PASSWORD" | docker login -u nunofgs --password-stdin
   - docker run --privileged linuxkit/binfmt:v0.7
   - docker buildx create --use
-  - docker buildx build --platform linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 --build-arg "version=$TRAVIS_BRANCH" -t nunofgs/test:latest -f "$VARIANT/Dockerfile" --push .
+  - docker buildx build
+    --platform $PLATFORMS
+    --build-arg "version=$TRAVIS_BRANCH"
+    --tag nunofgs/test:$TRAVIS_BRANCH
+    `if [ -n "$TRAVIS_TAG" ]; then echo "--tag nunofgs/test:$TRAVIS_TAG"; fi`
+    --file "$VARIANT/Dockerfile"
+    --push
+    .
