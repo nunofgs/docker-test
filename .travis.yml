@@ -1,6 +1,5 @@
 before_install:
   - curl -sf https://test.docker.com | sh
-  # - mkdir ~/.docker && echo '{ "experimental":"enabled" }' > ~/.docker/config.json
   - docker --version
 
 dist: bionic
@@ -8,6 +7,8 @@ dist: bionic
 language: bash
 
 env:
+  global:
+    - DOCKER_CLI_EXPERIMENTAL=enabled
   matrix:
     - VARIANT=alpine
     - VARIANT=debian
